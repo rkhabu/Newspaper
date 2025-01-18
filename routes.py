@@ -62,11 +62,11 @@ def add_article():
 
     if request.method == "POST":
 
-        now = datetime.now()  # current date and time
+        now = datetime.now()
         date_time = now.strftime("%d/%m/%Y, %H:%M:%S")
 
         file = request.files.get("image")
-        if file and file.filename:  # If file exists and has a name
+        if file and file.filename:
             filename = file.filename
             file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
         else:
@@ -87,10 +87,15 @@ def edit_article(id):
 
     if request.method == "POST":
         file = request.files["image"]
-        file.save(os.path.join(app.config["UPLOAD_FOLDER"], file.filename))
+        if file and file.filename:  # If file exists and has a name
+            filename = file.filename
+            file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+        else:
+            filename = None
+
         selected_article.name = form.name.data
         selected_article.text = form.text.data
-        selected_article.image = file.filename
+        selected_article.image = filename
         db.session.commit()
         return redirect("../../articles")
 
