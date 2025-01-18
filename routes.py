@@ -1,11 +1,17 @@
 from flask import Flask, render_template, request, redirect, flash, url_for
 from forms import AddArticleForm, RegisterForm, LogInForm, Survey
-from extensions import app, db
+from extensions import app, db, login_manager
 import os
 from models import Article, User, Comment, Feedback, Like
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
+
+
+@login_manager.unauthorized_handler
+def unauthorized_callback():
+    flash("You must log in to access this page.", "warning")
+    return redirect(url_for('login'))
 
 
 @app.route("/")
