@@ -95,8 +95,8 @@ def edit_article(id):
 @login_required
 def delete(id):
     selected_article = Article.query.get_or_404(id)
-    Like.query.filter_by(user_id=current_user.id, article_id=selected_article.id).delete()
-    Comment.query.filter_by(user_id=current_user.id, article_id=selected_article.id).delete()
+    Like.query.filter_by(article_id=selected_article.id).delete()
+    Comment.query.filter_by(article_id=selected_article.id).delete()
     db.session.delete(selected_article)
     db.session.commit()
     return redirect("../../articles")
