@@ -167,7 +167,6 @@ def login():
     form = LogInForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
-        # if user and check_password_hash(user.password, form.password.data):
         if user and user.password == form.password.data:
             flash("You Logged In Successfully", "success")
             login_user(user)
