@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %} Newspaper {% endblock %}
+{% block content%}
+
+<style>
+    .about-header {
+        background: linear-gradient(135deg, #007bff, #6610f2);
+        color: white;
+        padding: 3rem 1rem;
+        text-align: center;
+        border-radius: 10px;
+        margin-bottom: 2rem;
+    }
+</style>
+
+<body>
+
+    <div class="about-header">
+        <h1>Welcome to Our Newspaper</h1>
+        <p>Your trusted source for news, stories, and community engagement.</p>
+    </div>
+    <br>
+
+    {% if not current_user.is_authenticated %}
+        <p class="text-muted" style = "text-align: center"><a href="{{ url_for('login') }}">Log in</a> for a better experience</p>
+    {% else %}
+    <h1 class="text-muted" style = "text-align: center">Take a look at published <a href="{{ url_for('articles') }}"><u>articles</u></a></h1>
+    {% endif %}
+
+    <div style="text-align: center">
+        <img src="../static/news.jpeg">
+    </div>
+
+</body>
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %} Add Article {% endblock %}
+
+{% block content %}
+    <div class="container my-4">
+        <h1 class="text-center text-primary">Add New Article</h1>
+        <p class="text-muted text-center">Fill in the form below to create a new article for the newspaper.</p>
+        <div class="card p-4 shadow-sm">
+            <form method="post" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+                <div class="form-group">
+                    {{ form.name(class="form-control mt-3", placeholder="Enter Article Name") }}
+                </div>
+                <div class="form-group">
+                    {{ form.text(class="form-control mt-3", placeholder="Enter Article Text") }}
+                </div>
+                <div class="form-group">
+                    {{ form.image(class="form-control mt-3", placeholder="Upload Image") }}
+                </div>
+                <div class="text-center">
+                    {{ form.submit(class="btn btn-warning mt-4 px-5 py-2") }}
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

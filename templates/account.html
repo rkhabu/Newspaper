@@ -1,0 +1,186 @@
+{% extends "base.html" %}
+
+{% block title %} Account {% endblock %}
+
+{% block content%}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+    .account-header {
+        text-align: center;
+        margin-bottom: 2rem;
+        font-size: 2.5rem;
+        font-weight: bold;
+    }
+
+    .article-container {
+        padding: 2rem;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .article-header {
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+        color: #007bff;
+    }
+
+    .article-card {
+        border: 1px solid #ddd;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .article-actions {
+        margin-top: 1rem;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .article-actions .btn {
+        border-radius: 20px;
+        padding: 0.5rem 1rem;
+        transition: 0.3s;
+    }
+
+    .btn-warning {
+        background-color: #ffca2c;
+        border: none;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border: none;
+    }
+
+    .article-actions .btn:hover {
+        opacity: 0.8;
+    }
+
+    .article-image {
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px;
+        margin-top: 1rem;
+    }
+
+    .account-footer {
+        text-align: center;
+        margin-top: 3rem;
+    }
+
+    .footer-link {
+        text-decoration: none;
+        color: #007bff;
+        font-weight: bold;
+        padding: 0.5rem;
+    }
+
+    .footer-link:hover {
+        text-decoration: underline;
+    }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            left: 50%; /* Position the dropdown in the center */
+            transform: translateX(-50%); /* Adjust for centering */
+            text-align: center; /* Center the options */
+        }
+        .dropdown-content a {
+            color: black;
+            padding: 8px 12px;  /* Smaller padding for smaller options */
+            text-decoration: none;
+            display: block;
+            font-size: 14px;  /* Smaller font size */
+        }
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .dropdown:hover button {
+            background-color: #3e8e41;
+        }
+</style>
+
+<div class="container">
+
+    <div class="account-header">
+        <hr>
+        <h1>Username - {{ current_user.username }}</h1>
+
+        <div class="dropdown">
+            <button>Other Functionalities</button>
+            <div class="dropdown-content">
+                <a href="../../add_article">Add Article</a>
+                <a href="../../logout">Log out</a>
+            </div>
+        </div>
+    </div>
+
+
+    {% if article_user_ids %}
+        <div class="account-header">
+            <h2>My Articles:</h2>
+        </div>
+
+        <div class="article-container">
+            <div class="row">
+                {% for article in articles %}
+                    {% if article.user_id == current_user.id %}
+                        <div class="col-md-12">
+                            <div class="article-card">
+                                <h3 class="article-header">{{ article.date }}</h3>
+                                <p>{{ article.text }}</p>
+                                {% if article.image %}
+                                    <img class="article-image" src="../static/{{ article.image }}" alt="Article Image">
+                                {% endif %}
+                                <div class="article-actions">
+                                    {% if current_user.is_authenticated %}
+                                        <a class="btn btn-warning" href="../../details/{{ article.id }}" role="button">Details</a>
+                                    {% endif %}
+
+                                    {% if current_user.role == "admin" %}
+                                        <a class="btn btn-danger" href="../../delete/{{ article.id }}" role="button">Delete</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <br><br>
+        <div class="text-center">
+            <h2 class="text-muted">It looks like there are no articles yet. Be the first to share your story or ideas with the community, by pressing 'Add Article' below!</h2>
+            <a href="../../add_article" class="btn btn-primary btn-lg mt-4 px-5 py-3 shadow-sm rounded-pill">
+                <i class="fas fa-plus me-2"></i> Add Article
+            </a>
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,50 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand d-flex align-items-center" href="../../">
+      <img src="../../static/tbclogo.png" alt="Logo" style="width: 50px; height: 50px; border-radius: 10px;" class="me-2">
+      <span>Newspaper</span>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarContent">
+
+      <ul class="navbar-nav ms-auto">
+        {% if not current_user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link text-primary" href="../../register">Register</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-primary" href="../../login">Log In</a>
+        </li>
+        {% endif %}
+
+        <li class="nav-item">
+          <a class="nav-link" href="../../articles">Articles</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../../survey">Contact Us</a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="moreDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            More About Us
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="moreDropdown">
+            <li><a class="dropdown-item" href="../../about">Who Are We</a></li>
+            <li><a class="dropdown-item" href="../../us">What We Do</a></li>
+            <li><a class="dropdown-item" href="../../plan">What Is Our Plan</a></li>
+          </ul>
+        </li>
+
+        {% if current_user.is_authenticated %}
+        <li class="nav-item">
+          <b><a class="nav-link ml-5" href="../../account/{{ current_user.id }}">My Account</a></b>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
