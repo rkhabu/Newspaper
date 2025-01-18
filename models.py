@@ -27,7 +27,7 @@ class User(db.Model, UserMixin):
     role = db.Column(db.String(50), default="guest")
     articles = db.relationship('Article', back_populates='author', lazy=True)
 
-    # def __int__(self, username, password, role="guest"):
+    # def __init__(self, username, password, role="guest"):
     #     self.username = username
     #     self.password = generate_password_hash(password)
     #     self.role = role
